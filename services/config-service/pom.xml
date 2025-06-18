@@ -11,7 +11,6 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>carhunters-config-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>CarHunters - Config Service</name>
 	<packaging>jar</packaging>
 
