@@ -1,0 +1,28 @@
+name: "Application"
+
+services:
+  config-service:
+    image: dawid0604/carhunters-config-service
+    container_name: config-service
+    environment:
+      - DISCOVERY_SERVICE_INSTANCE=discovery-service
+    ports:
+      - "8888"
+    restart: unless-stopped
+    healthcheck:
+      test: "curl --fail --silent localhost:8888/actuator/health | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - carhunters_network
+
+networks:
+  carhunters_network:
+    driver: bridge
+    name: carhunters_network
