@@ -31,5 +31,10 @@
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>pl.dawid0604</groupId>
+            <artifactId>carhunters-config-service</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>
