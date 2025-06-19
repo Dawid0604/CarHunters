@@ -22,6 +22,30 @@ services:
     networks:
       - carhunters_network
 
+  discovery-service:
+    image: dawid0604/carhunters-discovery-service
+    container_name: discovery-service
+    environment:
+      - CONFIG_SERVICE_INSTANCE=config-service
+    ports:
+      - "8761:8761"
+    restart: unless-stopped
+    depends_on:
+      config-service:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8761/actuator/health | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - carhunters_network
+
 networks:
   carhunters_network:
     driver: bridge
