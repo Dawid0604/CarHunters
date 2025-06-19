@@ -7,6 +7,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>report-aggregate</artifactId>
+    <name>CarHunters - JaCoCo Report Aggregate</name>
     <packaging>pom</packaging>
 
     <build>
