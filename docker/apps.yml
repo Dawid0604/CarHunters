@@ -43,6 +43,37 @@ services:
       resources:
         limits:
           memory: 700m
+
+
+    networks:
+      - carhunters_network
+
+  user-service:
+    image: dawid0604/carhunters-user-service
+    container_name: user-service
+    environment:
+      - CONFIG_SERVICE_INSTANCE=config-service
+      - DISCOVERY_SERVICE_INSTANCE=discovery-service
+      - USER_MICROSERVICE_DB_HOST=user-service-postgres-db
+      - USER_MICROSERVICE_POSTGRES_PORT=${USER_MICROSERVICE_POSTGRES_PORT}
+      - USER_MICROSERVICE_POSTGRES_USER=${USER_MICROSERVICE_POSTGRES_USER}
+      - USER_MICROSERVICE_POSTGRES_PASSWORD=${USER_MICROSERVICE_POSTGRES_PASSWORD}
+      - USER_MICROSERVICE_POSTGRES_DB=${USER_MICROSERVICE_POSTGRES_DB}
+    restart: unless-stopped
+    depends_on:
+      config-service:
+        condition: service_healthy
+
+      discovery-service:
+        condition: service_healthy
+
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+        reservations:
+          memory: 256M
+
     networks:
       - carhunters_network
 
