@@ -1,6 +1,7 @@
 package pl.dawid0604.carhunters.user.service;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -9,12 +10,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.testcontainers.containers.PostgreSQLContainer;
 
+import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PROTECTED;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-import static pl.dawid0604.carhunters.user.service.IntegrationTestBase.TestContainersConfig;
+import static pl.dawid0604.carhunters.user.service.IntegrationTestBase.ContainersConfig;
 
 @Getter(PROTECTED)
-@Import(TestContainersConfig.class)
+@Import(ContainersConfig.class)
+@NoArgsConstructor(access = PACKAGE)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 public abstract class IntegrationTestBase {
 
@@ -22,7 +25,7 @@ public abstract class IntegrationTestBase {
     private int serverPort;
 
     @TestConfiguration
-    static class TestContainersConfig {
+    static class ContainersConfig {
 
         @Bean
         @ServiceConnection
