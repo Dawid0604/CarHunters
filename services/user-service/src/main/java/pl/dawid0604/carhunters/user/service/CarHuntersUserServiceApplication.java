@@ -9,10 +9,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableDiscoveryClient
 @SpringBootApplication
 @SuppressWarnings("PMD")
-class CarHuntersCarServiceApplication {
+class CarHuntersUserServiceApplication {
 
 	public static void main(final String[] args) {
-		SpringApplication.run(CarHuntersCarServiceApplication.class, args);
+		SpringApplication.run(CarHuntersUserServiceApplication.class, args);
 	}
 
 }
