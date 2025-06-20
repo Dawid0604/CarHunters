@@ -33,5 +33,8 @@ spring:
         spring.kafka.consumer.enable-aut-commit: false
         spring.kafka.listener.ack-mode: MANUAL_IMMEDIATE
 
+mongock:
+  migration-scan-package: pl.dawid0604.carhunters.notification.service.config.migration
+
 server:
   port: 0

@@ -105,7 +105,29 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>io.mongock</groupId>
+			<artifactId>mongock-springboot</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.mongock</groupId>
+			<artifactId>mongodb-springdata-v4-driver</artifactId>
+		</dependency>
 	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>io.mongock</groupId>
+				<artifactId>mongock-bom</artifactId>
+				<version>5.5.1</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<plugins>
@@ -141,10 +163,10 @@
 				<configuration>
 					<excludes>
 						<exclude>**/CarHuntersNotificationServiceApplication.class</exclude>
+						<exclude>**/MongoMigrationManager*.class</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
-
 		</plugins>
 	</build>
 </project>
