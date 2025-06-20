@@ -85,6 +85,41 @@ services:
     networks:
       - carhunters_network
 
+  notification-service:
+    image: dawid0604/carhunters-notification-service
+    container_name: notification-service
+    environment:
+      - CONFIG_SERVICE_INSTANCE=config-service
+      - DISCOVERY_SERVICE_INSTANCE=discovery-service
+      - NOTIFICATION_MICROSERVICE_MONGO_DB_HOST=notification-mongo-db
+      - NOTIFICATION_MICROSERVICE_MONGO_DB_USER=${NOTIFICATION_MICROSERVICE_MONGO_DB_USER}
+      - NOTIFICATION_MICROSERVICE_MONGO_DB_PASSWORD=${NOTIFICATION_MICROSERVICE_MONGO_DB_PASSWORD}
+      - NOTIFICATION_MICROSERVICE_MONGO_DB_PORT=${NOTIFICATION_MICROSERVICE_MONGO_DB_PORT}
+      - NOTIFICATION_MICROSERVICE_MONGO_DB_DATABASE=${NOTIFICATION_MICROSERVICE_MONGO_DB_DATABASE}
+      - NOTIFICATION_MICROSERVICE_MONGO_DB_AUTHENTICATION_DATABASE=${NOTIFICATION_MICROSERVICE_MONGO_DB_AUTHENTICATION_DATABASE}
+      - KAFKA_SERVER=kafka
+
+    restart: unless-stopped
+    depends_on:
+      discovery-service:
+        condition: service_healthy
+
+      config-service:
+        condition: service_healthy
+
+      kafka:
+        condition: service_healthy
+
+    deploy:
+      resources:
+        limits:
+          memory: 700M
+        reservations:
+          memory: 256M
+
+    networks:
+      - carhunters_network
+
 networks:
   carhunters_network:
     driver: bridge
