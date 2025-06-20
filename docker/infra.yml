@@ -2,7 +2,7 @@ name: "Infrastructure"
 
 volumes:
   user-service-postgres-volume:
-  notification-mongo-db-volume:
+  notification-service-mongo-volume:
 
 services:
   user-service-postgres-db:
@@ -57,7 +57,7 @@ services:
       retries: 5
 
     volumes:
-      - notification-mongo-db-volume:/data/db
+      - notification-service-mongo-volume:/data/db
 
     ports:
       - "${NOTIFICATION_MICROSERVICE_MONGO_DB_PORT}:${NOTIFICATION_MICROSERVICE_MONGO_DB_PORT}"
