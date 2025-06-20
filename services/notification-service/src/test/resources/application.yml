@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: notification-service
+
+  output:
+    ansi:
+      enabled: ALWAYS
+
+  config:
+    import: optional:configserver:http://${CONFIG_SERVICE_INSTANCE:localhost}:8888
+
+mongock:
+  migration-scan-package: pl.dawid0604.carhunters.notification.service.config.migration
