@@ -25,8 +25,8 @@ services:
 
     healthcheck:
       test: >
-        "bash -c pg_isready -U $${USER_MICROSERVICE_POSTGRES_USER} -d $${USER_MICROSERVICE_POSTGRES_PASSWORD} && 
-                 psql -U $${USER_MICROSERVICE_POSTGRES_USER} -d $${USER_MICROSERVICE_POSTGRES_PASSWORD} -c 'SELECT 1'"
+        bash -c "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB} && 
+                 psql -U $${POSTGRES_USER} -d $${POSTGRES_DB} -c 'SELECT 1'"
       interval: 10s
       timeout: 5s
       retries: 5
