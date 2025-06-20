@@ -1,0 +1,40 @@
+spring:
+  data:
+    mongodb:
+      username: ${NOTIFICATION_MICROSERVICE_MONGO_DB_USER}
+      password: ${NOTIFICATION_MICROSERVICE_MONGO_DB_PASSWORD}
+      host: ${NOTIFICATION_MICROSERVICE_MONGO_DB_HOST:localhost}
+      port: ${NOTIFICATION_MICROSERVICE_MONGO_DB_PORT}
+      database: ${NOTIFICATION_MICROSERVICE_MONGO_DB_DATABASE}
+      authentication-database: ${NOTIFICATION_MICROSERVICE_MONGO_DB_AUTHENTICATION_DATABASE}
+
+      connection-pool:
+        max-size: 10
+        min-size: 2
+        max-connection-idle-time: 60000
+        max-connection-life-time: 1800000
+        max-wait-time: 30000
+
+      option:
+        ssl: false
+        max-connecting: 20
+        heartbeat-frequency: 10000
+        server-selection-timeout: 30000
+
+  kafka:
+    consumer:
+      bootstrap-servers: ${KAFKA_SERVER}
+      group-id: notification-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+#        spring.json.trusted.packages: '*'
+        spring.kafka.consumer.enable-aut-commit: false
+        spring.kafka.listener.ack-mode: MANUAL_IMMEDIATE
+
+mongock:
+  migration-scan-package: pl.dawid0604.carhunters.notification.service.config.migration
+
+server:
+  port: 0

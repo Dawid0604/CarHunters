@@ -1,0 +1,84 @@
+name: "Dashboards"
+
+services:
+  user-service-pgadmin:
+    build: resources/pgadmin
+    container_name: user-service-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${USER_MICROSERVICE_PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${USER_MICROSERVICE_PGADMIN_PASSWORD}
+      SERVER_NAME: user-service-db-server
+      DATABASE_HOST: user-service-postgres-db
+      DATABASE_PORT: ${USER_MICROSERVICE_POSTGRES_PORT}
+      DATABASE_NAME: ${USER_MICROSERVICE_POSTGRES_DB}
+      DATABASE_USER: ${USER_MICROSERVICE_POSTGRES_USER}
+      DATABASE_PASSWORD: ${USER_MICROSERVICE_POSTGRES_PASSWORD}
+
+    ports:
+      - "5050:80"
+
+    depends_on:
+      user-service-postgres-db:
+        condition: service_healthy
+
+    networks:
+      - carhunters_network
+
+  notification-service-mongo-db-express:
+    image: mongo-express:1.0.2-20-alpine3.19
+    container_name: notification-db-express
+    restart: unless-stopped
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://${NOTIFICATION_MICROSERVICE_MONGO_DB_USER}:${NOTIFICATION_MICROSERVICE_MONGO_DB_PASSWORD}@notification-mongo-db:${NOTIFICATION_MICROSERVICE_MONGO_DB_PORT}/${NOTIFICATION_MICROSERVICE_MONGO_DB_AUTHENTICATION_DATABASE}?authSource=admin
+      ME_CONFIG_BASICAUTH_USERNAME: ${NOTIFICATION_MICROSERVICE_MONGO_EXPRESS_USER}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${NOTIFICATION_MICROSERVICE_MONGO_EXPRESS_PASSWORD}
+
+    ports:
+      - "48081:8081"
+
+    depends_on:
+      notification-mongo-db:
+        condition: service_healthy
+
+    deploy:
+      resources:
+        limits:
+          memory: 700M
+        reservations:
+          memory: 256M
+
+    networks:
+      - carhunters_network
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:v0.7.2
+    container_name: kafka-ui
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+
+    ports:
+      - "48083:8080"
+
+    depends_on:
+      zookeeper:
+        condition: service_healthy
+
+      kafka:
+        condition: service_healthy
+
+    deploy:
+      resources:
+        limits:
+          memory: 700M
+        reservations:
+          memory: 256M
+
+    networks:
+      - carhunters_network
+
+networks:
+  carhunters_network:
+    driver: bridge
+    name: carhunters_network
