@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${CAR_MICROSERVICE_DB_HOST:localhost}:${CAR_MICROSERVICE_POSTGRES_PORT}/${CAR_MICROSERVICE_POSTGRES_DB}
+    username: ${CAR_MICROSERVICE_POSTGRES_USER}
+    password: ${CAR_MICROSERVICE_POSTGRES_PASSWORD}
+
+    hikari:
+      maximum-pool-size: 15
+      minimum-idle: 7
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      leak-detection-threshold: 10000
+
+  flyway:
+    schemas: ${CAR_MICROSERVICE_POSTGRES_DB}
+    user: ${CAR_MICROSERVICE_POSTGRES_USER}
+    password: ${CAR_MICROSERVICE_POSTGRES_PASSWORD}
+    url: jdbc:postgresql://${CAR_MICROSERVICE_DB_HOST:localhost}:${CAR_MICROSERVICE_POSTGRES_PORT}/${CAR_MICROSERVICE_POSTGRES_DB}
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+
+server:
+  port: 0

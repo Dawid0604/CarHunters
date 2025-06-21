@@ -55,6 +55,7 @@
 		<module>services/user-service</module>
 		<module>services/notification-service</module>
 		<module>services/favorite-service</module>
+		<module>services/car-service</module>
 	</modules>
 
 	<reporting>
