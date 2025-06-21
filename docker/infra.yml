@@ -5,6 +5,7 @@ volumes:
   notification-service-mongo-volume:
   favorite-service-postgres-volume:
   car-service-postgres-volume:
+  car-history-service-mongo-volume:
 
 services:
   user-service-postgres-db:
@@ -196,6 +197,38 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+
+        reservations:
+          memory: 256M
+
+    networks:
+      - carhunters_network
+
+  car-history-mongo-db:
+    image: mongo:8.0.9
+    container_name: car-history-mongo-db
+    command: [ "mongod", "--port", "${CAR_HISTORY_MICROSERVICE_MONGO_DB_PORT}" ]
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${CAR_HISTORY_MICROSERVICE_MONGO_DB_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${CAR_HISTORY_MICROSERVICE_MONGO_DB_PASSWORD}
+      - MONGO_INITDB_DATABASE=${CAR_HISTORY_MICROSERVICE_MONGO_DB_DATABASE}
+
+    healthcheck:
+      test: [ "CMD-SHELL", "echo 'db.runCommand(\"ping\").ok' | mongosh localhost:${CAR_HISTORY_MICROSERVICE_MONGO_DB_PORT}/test --quiet" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+    volumes:
+      - car-history-service-mongo-volume:/data/db
+
+    ports:
+      - "${CAR_HISTORY_MICROSERVICE_MONGO_DB_PORT}:${CAR_HISTORY_MICROSERVICE_MONGO_DB_PORT}"
 
     deploy:
       resources:
