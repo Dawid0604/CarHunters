@@ -4,6 +4,7 @@ volumes:
   user-service-postgres-volume:
   notification-service-mongo-volume:
   favorite-service-postgres-volume:
+  car-service-postgres-volume:
 
 services:
   user-service-postgres-db:
@@ -150,6 +151,43 @@ services:
 
     volumes:
       - favorite-service-postgres-volume:/var/lib/postgresql/data
+
+    healthcheck:
+      test: >
+        bash -c "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB} && 
+                 psql -U $${POSTGRES_USER} -d $${POSTGRES_DB} -c 'SELECT 1'"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+
+        reservations:
+          memory: 256M
+
+    networks:
+      - carhunters_network
+
+  car-service-postgres-db:
+    image: postgres:17-alpine
+    container_name: car-service-postgres-db
+
+    environment:
+      - POSTGRES_USER=${CAR_MICROSERVICE_POSTGRES_USER}
+      - POSTGRES_PASSWORD=${CAR_MICROSERVICE_POSTGRES_PASSWORD}
+      - POSTGRES_DB=${CAR_MICROSERVICE_POSTGRES_DB}
+      - PGPORT=${CAR_MICROSERVICE_POSTGRES_PORT}
+
+    command: "-p ${CAR_MICROSERVICE_POSTGRES_PORT}"
+
+    ports:
+      - "${CAR_MICROSERVICE_POSTGRES_PORT}:${CAR_MICROSERVICE_POSTGRES_PORT}"
+
+    volumes:
+      - car-service-postgres-volume:/var/lib/postgresql/data
 
     healthcheck:
       test: >
