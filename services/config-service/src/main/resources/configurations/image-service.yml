@@ -1,0 +1,10 @@
+server:
+  port: 0
+
+spring:
+  servlet:
+    multipart:
+      enabled: true
+
+cloudinary:
+  url: cloudinary://${CLOUDINARY_API_KEY}:${CLOUDINARY_API_SECRET}@${CLOUDINARY_API_ENVIRONMENT}

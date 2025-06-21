@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: image-service
+
+  output:
+    ansi:
+      enabled: ALWAYS
+
+  config:
+    import: optional:configserver:http://${CONFIG_SERVICE_INSTANCE:localhost}:8888
+
+cloudinary:
+  url: cloudinary://${CLOUDINARY_API_KEY:xyz}:${CLOUDINARY_API_SECRET:xyz}@${CLOUDINARY_API_ENVIRONMENT:xyz}
