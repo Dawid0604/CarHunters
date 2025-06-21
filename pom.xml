@@ -57,6 +57,7 @@
 		<module>services/favorite-service</module>
 		<module>services/car-service</module>
 		<module>services/car-history-service</module>
+		<module>services/admin-service</module>
 	</modules>
 
 	<reporting>
