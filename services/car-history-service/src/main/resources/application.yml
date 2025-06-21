@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: car-history-service
+
+  config:
+    import: configserver:http://${CONFIG_SERVICE_INSTANCE:localhost}:8888

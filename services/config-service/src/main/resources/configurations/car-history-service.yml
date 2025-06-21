@@ -1,0 +1,40 @@
+spring:
+  data:
+    mongodb:
+      username: ${CAR_HISTORY_MICROSERVICE_MONGO_DB_USER}
+      password: ${CAR_HISTORY_MICROSERVICE_MONGO_DB_PASSWORD}
+      host: ${CAR_HISTORY_MICROSERVICE_MONGO_DB_HOST:localhost}
+      port: ${CAR_HISTORY_MICROSERVICE_MONGO_DB_PORT}
+      database: ${CAR_HISTORY_MICROSERVICE_MONGO_DB_DATABASE}
+      authentication-database: ${CAR_HISTORY_MICROSERVICE_MONGO_DB_AUTHENTICATION_DATABASE}
+
+      connection-pool:
+        max-size: 15
+        min-size: 3
+        max-connection-idle-time: 60000
+        max-connection-life-time: 1800000
+        max-wait-time: 15000
+
+      option:
+        ssl: false
+        max-connecting: 30
+        heartbeat-frequency: 5000
+        server-selection-timeout: 15000
+
+  kafka:
+    consumer:
+      bootstrap-servers: ${KAFKA_SERVER}
+      group-id: car-history-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+#        spring.json.trusted.packages: '*'
+        spring.kafka.consumer.enable-aut-commit: false
+        spring.kafka.listener.ack-mode: MANUAL_IMMEDIATE
+
+mongock:
+  migration-scan-package: pl.dawid0604.carhunters.car.history.service.config.migration
+
+server:
+  port: 0
