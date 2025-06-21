@@ -1,5 +1,8 @@
 name: "Application"
 
+volumes:
+  image-service-volume:
+
 services:
   config-service:
     image: dawid0604/carhunters-config-service
@@ -228,6 +231,37 @@ services:
     environment:
       - CONFIG_SERVICE_INSTANCE=config-service
       - DISCOVERY_SERVICE_INSTANCE=discovery-service
+
+    restart: unless-stopped
+    depends_on:
+      discovery-service:
+        condition: service_healthy
+
+      config-service:
+        condition: service_healthy
+
+    deploy:
+      resources:
+        limits:
+          memory: 700M
+        reservations:
+          memory: 256M
+
+    networks:
+      - carhunters_network
+
+  image-service:
+    image: dawid0604/carhunters-image-service
+    container_name: image-service
+    environment:
+      - CONFIG_SERVICE_INSTANCE=config-service
+      - DISCOVERY_SERVICE_INSTANCE=discovery-service
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+      - CLOUDINARY_API_ENVIRONMENT=${CLOUDINARY_API_ENVIRONMENT}
+
+    volumes:
+      - ./resources/images:/images
 
     restart: unless-stopped
     depends_on:
