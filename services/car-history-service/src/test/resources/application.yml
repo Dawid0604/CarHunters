@@ -10,4 +10,4 @@ spring:
     import: optional:configserver:http://${CONFIG_SERVICE_INSTANCE:localhost}:8888
 
 mongock:
-  migration-scan-package: pl.dawid0604.carhunters.car.history.service.config.migratio
+  migration-scan-package: pl.dawid0604.carhunters.car.history.service.config.migration
