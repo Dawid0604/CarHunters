@@ -8,7 +8,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableCaching
 @EnableDiscoveryClient
 @SpringBootApplication
-@SuppressWarnings("PMD")
+@SuppressWarnings("PMD.UseUtilityClass")
 class CarHuntersFavoriteServiceApplication {
 
 	public static void main(final String[] args) {
