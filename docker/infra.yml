@@ -3,6 +3,7 @@ name: "Infrastructure"
 volumes:
   user-service-postgres-volume:
   notification-service-mongo-volume:
+  favorite-service-postgres-volume:
 
 services:
   user-service-postgres-db:
@@ -120,6 +121,43 @@ services:
       - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:29092,PLAINTEXT_HOST://host.docker.internal:9092
       - KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:29092,PLAINTEXT_HOST://0.0.0.0:9092
+
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+
+        reservations:
+          memory: 256M
+
+    networks:
+      - carhunters_network
+
+  favorite-service-postgres-db:
+    image: postgres:17-alpine
+    container_name: favorite-service-postgres-db
+
+    environment:
+      - POSTGRES_USER=${FAVORITE_MICROSERVICE_POSTGRES_USER}
+      - POSTGRES_PASSWORD=${FAVORITE_MICROSERVICE_POSTGRES_PASSWORD}
+      - POSTGRES_DB=${FAVORITE_MICROSERVICE_POSTGRES_DB}
+      - PGPORT=${FAVORITE_MICROSERVICE_POSTGRES_PORT}
+
+    command: "-p ${FAVORITE_MICROSERVICE_POSTGRES_PORT}"
+
+    ports:
+      - "${FAVORITE_MICROSERVICE_POSTGRES_PORT}:${FAVORITE_MICROSERVICE_POSTGRES_PORT}"
+
+    volumes:
+      - favorite-service-postgres-volume:/var/lib/postgresql/data
+
+    healthcheck:
+      test: >
+        bash -c "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB} && 
+                 psql -U $${POSTGRES_USER} -d $${POSTGRES_DB} -c 'SELECT 1'"
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
     deploy:
       resources:

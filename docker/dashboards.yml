@@ -78,6 +78,29 @@ services:
     networks:
       - carhunters_network
 
+  favorite-service-pgadmin:
+    build: resources/pgadmin
+    container_name: favorite-service-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${FAVORITE_MICROSERVICE_PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${FAVORITE_MICROSERVICE_PGADMIN_PASSWORD}
+      SERVER_NAME: favorite-service-db-server
+      DATABASE_HOST: favorite-service-postgres-db
+      DATABASE_PORT: ${FAVORITE_MICROSERVICE_POSTGRES_PORT}
+      DATABASE_NAME: ${FAVORITE_MICROSERVICE_POSTGRES_DB}
+      DATABASE_USER: ${FAVORITE_MICROSERVICE_POSTGRES_USER}
+      DATABASE_PASSWORD: ${FAVORITE_MICROSERVICE_POSTGRES_PASSWORD}
+
+    ports:
+      - "5051:80"
+
+    depends_on:
+      favorite-service-postgres-db:
+        condition: service_healthy
+
+    networks:
+      - carhunters_network
+
 networks:
   carhunters_network:
     driver: bridge
