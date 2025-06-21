@@ -152,6 +152,38 @@ services:
     networks:
       - carhunters_network
 
+  car-service:
+    image: dawid0604/carhunters-car-service
+    container_name: car-service
+    environment:
+      - CONFIG_SERVICE_INSTANCE=config-service
+      - DISCOVERY_SERVICE_INSTANCE=discovery-service
+      - CAR_MICROSERVICE_DB_HOST=car-service-postgres-db
+      - CAR_MICROSERVICE_POSTGRES_PORT=${CAR_MICROSERVICE_POSTGRES_PORT}
+      - CAR_MICROSERVICE_POSTGRES_USER=${CAR_MICROSERVICE_POSTGRES_USER}
+      - CAR_MICROSERVICE_POSTGRES_PASSWORD=${CAR_MICROSERVICE_POSTGRES_PASSWORD}
+      - CAR_MICROSERVICE_POSTGRES_DB=${CAR_MICROSERVICE_POSTGRES_DB}
+    restart: unless-stopped
+    depends_on:
+      config-service:
+        condition: service_healthy
+
+      discovery-service:
+        condition: service_healthy
+
+      car-service-postgres-db:
+        condition: service_healthy
+
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+        reservations:
+          memory: 256M
+
+    networks:
+      - carhunters_network
+
 networks:
   carhunters_network:
     driver: bridge
