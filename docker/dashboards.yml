@@ -101,6 +101,29 @@ services:
     networks:
       - carhunters_network
 
+  car-service-pgadmin:
+    build: resources/pgadmin
+    container_name: car-service-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${CAR_MICROSERVICE_PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${CAR_MICROSERVICE_PGADMIN_PASSWORD}
+      SERVER_NAME: car-service-db-server
+      DATABASE_HOST: car-service-postgres-db
+      DATABASE_PORT: ${CAR_MICROSERVICE_POSTGRES_PORT}
+      DATABASE_NAME: ${CAR_MICROSERVICE_POSTGRES_DB}
+      DATABASE_USER: ${CAR_MICROSERVICE_POSTGRES_USER}
+      DATABASE_PASSWORD: ${CAR_MICROSERVICE_POSTGRES_PASSWORD}
+
+    ports:
+      - "5052:80"
+
+    depends_on:
+      car-service-postgres-db:
+        condition: service_healthy
+
+    networks:
+      - carhunters_network
+
 networks:
   carhunters_network:
     driver: bridge
