@@ -184,6 +184,44 @@ services:
     networks:
       - carhunters_network
 
+  car-history-service:
+    image: dawid0604/carhunters-car-history-service
+    container_name: car-history-service
+    environment:
+      - CONFIG_SERVICE_INSTANCE=config-service
+      - DISCOVERY_SERVICE_INSTANCE=discovery-service
+      - CAR_HISTORY_MICROSERVICE_MONGO_DB_HOST=car-history-mongo-db
+      - CAR_HISTORY_MICROSERVICE_MONGO_DB_USER=${CAR_HISTORY_MICROSERVICE_MONGO_DB_USER}
+      - CAR_HISTORY_MICROSERVICE_MONGO_DB_PASSWORD=${CAR_HISTORY_MICROSERVICE_MONGO_DB_PASSWORD}
+      - CAR_HISTORY_MICROSERVICE_MONGO_DB_PORT=${CAR_HISTORY_MICROSERVICE_MONGO_DB_PORT}
+      - CAR_HISTORY_MICROSERVICE_MONGO_DB_DATABASE=${CAR_HISTORY_MICROSERVICE_MONGO_DB_DATABASE}
+      - CAR_HISTORY_MICROSERVICE_MONGO_DB_AUTHENTICATION_DATABASE=${CAR_HISTORY_MICROSERVICE_MONGO_DB_AUTHENTICATION_DATABASE}
+      - KAFKA_SERVER=kafka
+
+    restart: unless-stopped
+    depends_on:
+      discovery-service:
+        condition: service_healthy
+
+      config-service:
+        condition: service_healthy
+
+      kafka:
+        condition: service_healthy
+
+      car-history-mongo-db:
+        condition: service_healthy
+
+    deploy:
+      resources:
+        limits:
+          memory: 700M
+        reservations:
+          memory: 256M
+
+    networks:
+      - carhunters_network
+
 networks:
   carhunters_network:
     driver: bridge
