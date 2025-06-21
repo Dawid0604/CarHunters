@@ -54,6 +54,7 @@
 		<module>services/discovery-service</module>
 		<module>services/user-service</module>
 		<module>services/notification-service</module>
+		<module>services/favorite-service</module>
 	</modules>
 
 	<reporting>
