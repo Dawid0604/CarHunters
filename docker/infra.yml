@@ -241,6 +241,34 @@ services:
     networks:
       - carhunters_network
 
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.2
+    container_name: keycloak
+    command:
+      - "start-dev" # Only for development
+      - "--import-realm"
+      - "--http-port=${KEYCLOAK_PORT}"
+
+    environment:
+      - KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN}
+      - KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_PASSWORD}
+
+    ports:
+      - "${KEYCLOAK_PORT}:${KEYCLOAK_PORT}"
+
+    volumes:
+      - ./resources/keycloak:/opt/keycloak/data/import:ro,Z #Phrase ":ro,Z" is required by SELinux
+
+    deploy:
+      resources:
+        limits:
+          memory: 2GB
+        reservations:
+          memory: 256M
+
+    networks:
+      - carhunters_network
+
 networks:
   carhunters_network:
     driver: bridge
