@@ -1,0 +1,91 @@
+server:
+  port: ${GATEWAY_PORT}
+
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true
+
+          globalcors:
+            cors-configurations:
+              '[/**]':
+                allowed-origins: '*' # Temporary
+                allowed-methods:
+                  - 'GET'
+                  - 'POST'
+                  - 'PUT'
+                  - 'DELETE'
+                  - 'PATCH'
+                  - 'OPTIONS'
+                allowed-headers:
+                  - 'Content-Type'
+                  - 'X-Requested-With'
+                  - 'Authorization'
+                  - 'Accept'
+                allow-credentials: false
+
+          default-filters:
+            - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Methods Access-Control-Allow-Headers RETAIN_FIRST
+
+          routes:
+            - id: openapi
+              uri: http://${HOSTNAME}:${server.port}
+              predicates:
+                - Path=/v3/api-docs/**
+              filters:
+                - RewritePath=/v3/api-docs/?(?<segment>.*), /${segment}/v3/api-docs
+
+            - id: admin-service
+              uri: lb://admin-service
+              predicates:
+                - Path=/admin/**
+              filters:
+                - RewritePath=/admin/?(?<segment>.*), /${segment}
+
+            - id: car-history-service
+              uri: lb://car-history-service
+              predicates:
+                - Path=/car-history/**
+              filters:
+                - RewritePath=/car-history/?(?<segment>.*), /${segment}
+
+            - id: car-service
+              uri: lb://car-service
+              predicates:
+                - Path=/car/**
+              filters:
+                - RewritePath=/car/?(?<segment>.*), /${segment}
+
+            - id: favorite-service
+              uri: lb://favorite-service
+              predicates:
+                - Path=/favorite/**
+              filters:
+                - RewritePath=/favorite/?(?<segment>.*), /${segment}
+
+            - id: image-service
+              uri: lb://image-service
+              predicates:
+                - Path=/image/**
+              filters:
+                - RewritePath=/image/?(?<segment>.*), /${segment}
+
+            - id: user-service
+              uri: lb://user-service
+              predicates:
+                - Path=/user/**
+              filters:
+                - RewritePath=/user/?(?<segment>.*), /${segment}
+
+  mvc:
+    problemdetails:
+      enabled: true
+
+springdoc:
+  swagger-ui:
+    use-root-path: true
