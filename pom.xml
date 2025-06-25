@@ -60,6 +60,7 @@
 		<module>services/admin-service</module>
 		<module>services/image-service</module>
 		<module>services/gateway-service</module>
+		<module>services/frontend-service</module>
 	</modules>
 
 	<reporting>
