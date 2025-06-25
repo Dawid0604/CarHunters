@@ -287,7 +287,7 @@ services:
     environment:
       - CONFIG_SERVICE_INSTANCE=config-service
       - DISCOVERY_SERVICE_INSTANCE=discovery-service
-      - GATEWAY_PORT=8989
+      - GATEWAY_PORT=${GATEWAY_PORT}
 
     restart: unless-stopped
     depends_on:
@@ -298,7 +298,7 @@ services:
         condition: service_healthy
 
     ports:
-      - "8989:8989"
+      - "${GATEWAY_PORT}:${GATEWAY_PORT}"
 
     deploy:
       resources:
