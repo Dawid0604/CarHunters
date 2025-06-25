@@ -310,6 +310,34 @@ services:
     networks:
       - carhunters_network
 
+  frontend-service:
+    image: dawid0604/carhunters-frontend-service
+    container_name: frontend-service
+    environment:
+      - CONFIG_SERVICE_INSTANCE=config-service
+      - DISCOVERY_SERVICE_INSTANCE=discovery-service
+
+    restart: unless-stopped
+    depends_on:
+      discovery-service:
+        condition: service_healthy
+
+      config-service:
+        condition: service_healthy
+
+    ports:
+      - "8080:8080"
+
+    deploy:
+      resources:
+        limits:
+          memory: 700M
+        reservations:
+          memory: 256M
+
+    networks:
+      - carhunters_network
+
 networks:
   carhunters_network:
     driver: bridge
