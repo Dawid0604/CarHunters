@@ -11,7 +11,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableCaching
 @EnableDiscoveryClient
 @SpringBootApplication
-@SuppressWarnings("PMD")
+@SuppressWarnings("PMD.UseUtilityClass")
 class CarHuntersUserServiceApplication {
 
 	/**
