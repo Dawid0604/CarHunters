@@ -13,6 +13,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PROTECTED;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static pl.dawid0604.carhunters.car.service.IntegrationTestBase.*;
 
 /**
  * The base of all integration tests.
@@ -27,7 +28,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
  * environment configuration.
  */
 @Getter(PROTECTED)
-@Import(IntegrationTestBase.ContainersConfig.class)
+@Import(ContainersConfig.class)
 @NoArgsConstructor(access = PACKAGE)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @SuppressWarnings({ "PMD.CommentSize", "PMD.AbstractClassWithoutAbstractMethod" })
