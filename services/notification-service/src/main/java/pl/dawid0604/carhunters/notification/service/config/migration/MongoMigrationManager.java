@@ -22,7 +22,7 @@ import static lombok.AccessLevel.PACKAGE;
 public final class MongoMigrationManager {
 
     /**
-     * Migration that creates the 'users' collection in MongoDB.
+     * Currently no nothing. For further development.
      */
     @RequiredArgsConstructor
     @ChangeUnit(id = "V1__init", order = "001", author = "system")
