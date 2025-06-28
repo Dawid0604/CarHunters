@@ -11,7 +11,7 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 @EnableCaching
 @EnableEurekaServer
 @SpringBootApplication
-@SuppressWarnings("PMD")
+@SuppressWarnings("PMD.UseUtilityClass")
 class CarHuntersDiscoveryServiceApplication {
 
 	/**
