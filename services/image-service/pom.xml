@@ -15,6 +15,9 @@
 
 	<properties>
 		<mainClass>pl.dawid0604.carhunters.image.service.CarHuntersImageServiceApplication</mainClass>
+		<sonar.coverage.exclusions>
+			**/CarHuntersImageServiceApplication.java
+		</sonar.coverage.exclusions>
 	</properties>
 
 	<dependencies>

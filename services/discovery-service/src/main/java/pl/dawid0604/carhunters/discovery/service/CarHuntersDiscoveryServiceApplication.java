@@ -5,12 +5,19 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
+/**
+ * Application runtime.
+ */
 @EnableCaching
 @EnableEurekaServer
 @SpringBootApplication
-@SuppressWarnings("PMD")
+@SuppressWarnings("PMD.UseUtilityClass")
 class CarHuntersDiscoveryServiceApplication {
 
+	/**
+	 * Simple main method.
+	 * @param args arguments
+	 */
 	public static void main(final String[] args) {
 		SpringApplication.run(CarHuntersDiscoveryServiceApplication.class, args);
 	}
