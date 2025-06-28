@@ -11,8 +11,7 @@ import static lombok.AccessLevel.PACKAGE;
 @EnableCaching
 @SpringBootApplication
 @EnableDiscoveryClient
-@SuppressWarnings("PMD")
-@NoArgsConstructor(access = PACKAGE)
+@SuppressWarnings("PMD.UseUtilityClass")
 class CarHuntersNotificationServiceApplication {
 
 	public static void main(final String[] args) {
