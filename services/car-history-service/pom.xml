@@ -15,6 +15,10 @@
 
 	<properties>
 		<mainClass>pl.dawid0604.carhunters.car.history.service.CarHuntersCarHistoryServiceApplication</mainClass>
+		<sonar.coverage.exclusions>
+			**/CarHuntersCarHistoryServiceApplication.java,
+			**/config/migration/**
+		</sonar.coverage.exclusions>
 	</properties>
 
 	<dependencies>

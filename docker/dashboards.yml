@@ -15,7 +15,7 @@ services:
       DATABASE_PASSWORD: ${USER_MICROSERVICE_POSTGRES_PASSWORD}
 
     ports:
-      - "5050:80"
+      - "${USER_SERVICE_PGADMIN_PORT}:80"
 
     depends_on:
       user-service-postgres-db:
@@ -34,7 +34,7 @@ services:
       ME_CONFIG_BASICAUTH_PASSWORD: ${NOTIFICATION_MICROSERVICE_MONGO_EXPRESS_PASSWORD}
 
     ports:
-      - "48081:8081"
+      - "${NOTIFICATION_SERVICE_MONGO_DB_EXPRESS_PORT}:8081"
 
     depends_on:
       notification-mongo-db:
@@ -59,7 +59,7 @@ services:
       KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
 
     ports:
-      - "48083:8080"
+      - "${KAFKA_UI_PORT}:8080"
 
     depends_on:
       zookeeper:
@@ -92,7 +92,7 @@ services:
       DATABASE_PASSWORD: ${FAVORITE_MICROSERVICE_POSTGRES_PASSWORD}
 
     ports:
-      - "5051:80"
+      - "${FAVORITE_SERVICE_PGADMIN_PORT}:80"
 
     depends_on:
       favorite-service-postgres-db:
@@ -115,7 +115,7 @@ services:
       DATABASE_PASSWORD: ${CAR_MICROSERVICE_POSTGRES_PASSWORD}
 
     ports:
-      - "5052:80"
+      - "${CAR_SERVICE_SERVICE_PGADMIN_PORT}:80"
 
     depends_on:
       car-service-postgres-db:
@@ -134,7 +134,7 @@ services:
       ME_CONFIG_BASICAUTH_PASSWORD: ${CAR_HISTORY_MICROSERVICE_MONGO_EXPRESS_PASSWORD}
 
     ports:
-      - "49081:8081"
+      - "${CAR_HISTORY_SERVICE_MONGO_DB_EXPRESS_PORT}:8081"
 
     depends_on:
       car-history-mongo-db:

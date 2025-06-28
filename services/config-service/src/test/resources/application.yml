@@ -16,4 +16,4 @@ spring:
       enabled: ALWAYS
 
 server:
-  port: ${CONFIG_SERVICE_PORT}
+  port: 8888

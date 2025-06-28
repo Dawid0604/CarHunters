@@ -15,6 +15,9 @@
 
 	<properties>
 		<mainClass>pl.dawid0604.carhunters.favorite.service.CarHuntersFavoriteServiceApplication</mainClass>
+		<sonar.coverage.exclusions>
+			**/CarHuntersFavoriteServiceApplication.java
+		</sonar.coverage.exclusions>
 	</properties>
 
 	<dependencies>

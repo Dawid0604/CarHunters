@@ -9,12 +9,14 @@ services:
     container_name: config-service
     environment:
       - DISCOVERY_SERVICE_INSTANCE=discovery-service
+      - CONFIG_SERVICE_PORT=${CONFIG_SERVICE_PORT}
+      - SERVER_PORT=${CONFIG_SERVICE_PORT}
     ports:
-      - "8888"
+      - "${CONFIG_SERVICE_PORT}:${CONFIG_SERVICE_PORT}"
     restart: unless-stopped
 
     healthcheck:
-      test: "curl --fail --silent localhost:8888/actuator/health | grep UP || exit 1"
+      test: "curl --fail --silent localhost:${CONFIG_SERVICE_PORT}/actuator/health | grep UP || exit 1"
       interval: 20s
       timeout: 5s
       retries: 5
@@ -35,15 +37,18 @@ services:
     container_name: discovery-service
     environment:
       - CONFIG_SERVICE_INSTANCE=config-service
+      - DISCOVERY_SERVICE_PORT=${DISCOVERY_SERVICE_PORT}
+      - SERVER_PORT=${DISCOVERY_SERVICE_PORT}
+      - CONFIG_SERVICE_PORT=${CONFIG_SERVICE_PORT}
     ports:
-      - "8761:8761"
+      - "${DISCOVERY_SERVICE_PORT}:${DISCOVERY_SERVICE_PORT}"
     restart: unless-stopped
     depends_on:
       config-service:
         condition: service_healthy
 
     healthcheck:
-      test: "curl --fail --silent localhost:8761/actuator/health | grep UP || exit 1"
+      test: "curl --fail --silent localhost:${DISCOVERY_SERVICE_PORT}/actuator/health | grep UP || exit 1"
       interval: 20s
       timeout: 5s
       retries: 5
@@ -64,7 +69,9 @@ services:
     container_name: user-service
     environment:
       - CONFIG_SERVICE_INSTANCE=config-service
+      - CONFIG_SERVICE_PORT=${CONFIG_SERVICE_PORT}
       - DISCOVERY_SERVICE_INSTANCE=discovery-service
+      - DISCOVERY_SERVICE_PORT=${DISCOVERY_SERVICE_PORT}
       - USER_MICROSERVICE_DB_HOST=user-service-postgres-db
       - USER_MICROSERVICE_POSTGRES_PORT=${USER_MICROSERVICE_POSTGRES_PORT}
       - USER_MICROSERVICE_POSTGRES_USER=${USER_MICROSERVICE_POSTGRES_USER}
@@ -93,7 +100,9 @@ services:
     container_name: notification-service
     environment:
       - CONFIG_SERVICE_INSTANCE=config-service
+      - CONFIG_SERVICE_PORT=${CONFIG_SERVICE_PORT}
       - DISCOVERY_SERVICE_INSTANCE=discovery-service
+      - DISCOVERY_SERVICE_PORT=${DISCOVERY_SERVICE_PORT}
       - NOTIFICATION_MICROSERVICE_MONGO_DB_HOST=notification-mongo-db
       - NOTIFICATION_MICROSERVICE_MONGO_DB_USER=${NOTIFICATION_MICROSERVICE_MONGO_DB_USER}
       - NOTIFICATION_MICROSERVICE_MONGO_DB_PASSWORD=${NOTIFICATION_MICROSERVICE_MONGO_DB_PASSWORD}
@@ -128,7 +137,9 @@ services:
     container_name: favorite-service
     environment:
       - CONFIG_SERVICE_INSTANCE=config-service
+      - CONFIG_SERVICE_PORT=${CONFIG_SERVICE_PORT}
       - DISCOVERY_SERVICE_INSTANCE=discovery-service
+      - DISCOVERY_SERVICE_PORT=${DISCOVERY_SERVICE_PORT}
       - FAVORITE_MICROSERVICE_DB_HOST=favorite-service-postgres-db
       - FAVORITE_MICROSERVICE_POSTGRES_PORT=${FAVORITE_MICROSERVICE_POSTGRES_PORT}
       - FAVORITE_MICROSERVICE_POSTGRES_USER=${FAVORITE_MICROSERVICE_POSTGRES_USER}
@@ -160,7 +171,9 @@ services:
     container_name: car-service
     environment:
       - CONFIG_SERVICE_INSTANCE=config-service
+      - CONFIG_SERVICE_PORT=${CONFIG_SERVICE_PORT}
       - DISCOVERY_SERVICE_INSTANCE=discovery-service
+      - DISCOVERY_SERVICE_PORT=${DISCOVERY_SERVICE_PORT}
       - CAR_MICROSERVICE_DB_HOST=car-service-postgres-db
       - CAR_MICROSERVICE_POSTGRES_PORT=${CAR_MICROSERVICE_POSTGRES_PORT}
       - CAR_MICROSERVICE_POSTGRES_USER=${CAR_MICROSERVICE_POSTGRES_USER}
@@ -192,7 +205,9 @@ services:
     container_name: car-history-service
     environment:
       - CONFIG_SERVICE_INSTANCE=config-service
+      - CONFIG_SERVICE_PORT=${CONFIG_SERVICE_PORT}
       - DISCOVERY_SERVICE_INSTANCE=discovery-service
+      - DISCOVERY_SERVICE_PORT=${DISCOVERY_SERVICE_PORT}
       - CAR_HISTORY_MICROSERVICE_MONGO_DB_HOST=car-history-mongo-db
       - CAR_HISTORY_MICROSERVICE_MONGO_DB_USER=${CAR_HISTORY_MICROSERVICE_MONGO_DB_USER}
       - CAR_HISTORY_MICROSERVICE_MONGO_DB_PASSWORD=${CAR_HISTORY_MICROSERVICE_MONGO_DB_PASSWORD}
@@ -230,7 +245,9 @@ services:
     container_name: admin-service
     environment:
       - CONFIG_SERVICE_INSTANCE=config-service
+      - CONFIG_SERVICE_PORT=${CONFIG_SERVICE_PORT}
       - DISCOVERY_SERVICE_INSTANCE=discovery-service
+      - DISCOVERY_SERVICE_PORT=${DISCOVERY_SERVICE_PORT}
 
     restart: unless-stopped
     depends_on:
@@ -255,7 +272,9 @@ services:
     container_name: image-service
     environment:
       - CONFIG_SERVICE_INSTANCE=config-service
+      - CONFIG_SERVICE_PORT=${CONFIG_SERVICE_PORT}
       - DISCOVERY_SERVICE_INSTANCE=discovery-service
+      - DISCOVERY_SERVICE_PORT=${DISCOVERY_SERVICE_PORT}
       - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
       - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
       - CLOUDINARY_API_ENVIRONMENT=${CLOUDINARY_API_ENVIRONMENT}
@@ -286,7 +305,9 @@ services:
     container_name: gateway-service
     environment:
       - CONFIG_SERVICE_INSTANCE=config-service
+      - CONFIG_SERVICE_PORT=${CONFIG_SERVICE_PORT}
       - DISCOVERY_SERVICE_INSTANCE=discovery-service
+      - DISCOVERY_SERVICE_PORT=${DISCOVERY_SERVICE_PORT}
       - GATEWAY_PORT=${GATEWAY_PORT}
 
     restart: unless-stopped
@@ -315,7 +336,10 @@ services:
     container_name: frontend-service
     environment:
       - CONFIG_SERVICE_INSTANCE=config-service
+      - CONFIG_SERVICE_PORT=${CONFIG_SERVICE_PORT}
       - DISCOVERY_SERVICE_INSTANCE=discovery-service
+      - DISCOVERY_SERVICE_PORT=${DISCOVERY_SERVICE_PORT}
+      - FRONTEND_PORT=${FRONTEND_PORT}
 
     restart: unless-stopped
     depends_on:
@@ -326,7 +350,7 @@ services:
         condition: service_healthy
 
     ports:
-      - "8080:8080"
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
 
     deploy:
       resources:

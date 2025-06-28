@@ -3,4 +3,4 @@ spring:
     name: discovery-service
 
   config:
-    import: configserver:http://${CONFIG_SERVICE_INSTANCE:localhost}:8888
+    import: configserver:http://${CONFIG_SERVICE_INSTANCE:localhost}:${CONFIG_SERVICE_PORT}
