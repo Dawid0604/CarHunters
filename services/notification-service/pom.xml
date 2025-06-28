@@ -16,6 +16,10 @@
 
 	<properties>
 		<mainClass>pl.dawid0604.carhunters.notification.service.CarHuntersNotificationServiceApplication</mainClass>
+		<sonar.coverage.exclusions>
+			**/CarHuntersNotificationServiceApplication.java,
+			**/config/migration/**
+		</sonar.coverage.exclusions>
 	</properties>
 
 	<dependencies>
