@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: car-service
+
+  output:
+    ansi:
+      enabled: ALWAYS
+
+  config:
+    import: optional:configserver:http://${CONFIG_SERVICE_INSTANCE:localhost}:${CONFIG_SERVICE_PORT:8888}

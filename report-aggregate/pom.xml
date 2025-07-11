@@ -32,66 +32,107 @@
     </build>
 
     <dependencies>
+        <!-- Config Service modules -->
         <dependency>
             <groupId>pl.dawid0604</groupId>
             <artifactId>carhunters-config-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
+        <!-- Discovery Service modules -->
         <dependency>
             <groupId>pl.dawid0604</groupId>
             <artifactId>carhunters-discovery-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
+        <!-- User Service modules -->
         <dependency>
             <groupId>pl.dawid0604</groupId>
             <artifactId>carhunters-user-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
+        <!-- Notification Service modules -->
         <dependency>
             <groupId>pl.dawid0604</groupId>
             <artifactId>carhunters-notification-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
+        <!-- Favorite Service modules -->
         <dependency>
             <groupId>pl.dawid0604</groupId>
             <artifactId>carhunters-favorite-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
+        <!-- Car Service modules -->
         <dependency>
             <groupId>pl.dawid0604</groupId>
-            <artifactId>carhunters-car-service</artifactId>
+            <artifactId>carhunters-car-service-application</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
+        <dependency>
+            <groupId>pl.dawid0604</groupId>
+            <artifactId>carhunters-car-service-config</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.dawid0604</groupId>
+            <artifactId>carhunters-car-service-persistence</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.dawid0604</groupId>
+            <artifactId>carhunters-car-service-commons</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.dawid0604</groupId>
+            <artifactId>carhunters-car-service-web</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.dawid0604</groupId>
+            <artifactId>carhunters-car-service-core</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <!-- Car History Service modules -->
         <dependency>
             <groupId>pl.dawid0604</groupId>
             <artifactId>carhunters-car-history-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
+        <!-- Admin Service modules -->
         <dependency>
             <groupId>pl.dawid0604</groupId>
             <artifactId>carhunters-admin-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
+        <!-- Image Service modules -->
         <dependency>
             <groupId>pl.dawid0604</groupId>
             <artifactId>carhunters-image-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
+        <!-- Gateway Service modules -->
         <dependency>
             <groupId>pl.dawid0604</groupId>
             <artifactId>carhunters-gateway-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
+        <!-- Frontend Service modules -->
         <dependency>
             <groupId>pl.dawid0604</groupId>
             <artifactId>carhunters-frontend-service</artifactId>

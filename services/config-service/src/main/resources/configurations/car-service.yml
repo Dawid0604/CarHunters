@@ -22,6 +22,9 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: validate
+    properties:
+      hibernate:
+        default_schema: ${CAR_MICROSERVICE_POSTGRES_DB}
 
 server:
   port: 0
